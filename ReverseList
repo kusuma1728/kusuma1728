@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct linklist {
+    int data;
+    struct linklist *next;
+}linklist;
+
+void insertList(linklist **head, int data)
+{
+    linklist *newNode;
+    
+    newNode = (struct linklist*) malloc(sizeof(linklist));
+    newNode->data =  data;
+    printf("%x %d\n", *head, newNode->data);
+    
+    newNode->next = *head;
+    *head = newNode;        
+}
+
+void printList(linklist *head)
+{
+    linklist *curr = head;
+    printf("printList %x\n", head);
+    while(curr != NULL)
+    {
+        printf("%d,  ", curr->data);
+        curr = curr->next;
+    }
+}
+
+void reversList(linklist **head)
+{
+    linklist *curr = *head, *prev = NULL, *next = NULL;
+    while(curr != NULL)
+    {
+        next =  curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    *head =  prev;
+}
+
+int main()
+{
+    linklist *head = NULL;
+    
+    insertList(&head, 1);
+    insertList(&head, 2);
+    insertList(&head, 3);
+    insertList(&head, 4);
+    insertList(&head, 5);
+    
+    printList(head);
+    
+    reversList(&head);
+    
+    printList(head);
+    
+
+    return 0;
+}
